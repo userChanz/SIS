@@ -1,0 +1,39 @@
+
+.body {
+  min-height: 100vh;
+  min-width: 100%;
+}
+
+.nav {
+  background-color: #384959;
+  color: #ffffff;
+
+  .sidebar-link {
+    display: flex !important; /* Forces it into a full-width block behavior */
+    width: 100%;
+    border-left: 4px solid transparent; 
+    background-color: transparent;
+    transition: border-color 0.25s ease, background-color 0.25s ease;
+  }
+
+  .sidebar-link:hover {
+    border-left-color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.1); 
+  }
+}
+
+.main {
+  background-color: #FAF9F6;
+
+  .dashboard-card {
+    background-color: #ffffff;
+  }
+
+  .content-main {
+
+    .container-card {
+      min-height: 350px;
+    }
+  }
+  
+}
