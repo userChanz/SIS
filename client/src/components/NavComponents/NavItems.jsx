@@ -1,10 +1,9 @@
 import { Link } from "react-router-dom"
-import { DashboardIcon, AddStudentIcon, StudentListIcon } from "./NavIcons"
+import { AddStudentIcon, StudentListIcon } from "./NavIcons"
 
 export function NavItems() {
     const links = [
-        { to: '/', label: 'Dashboard', Icon: DashboardIcon},
-        { to: '/addStudents', label: 'Add Student', Icon: AddStudentIcon},
+        { to: '/', label: 'Add Student', Icon: AddStudentIcon},
         { to: '/studentList', label: 'Student List', Icon: StudentListIcon},
     ]
 

@@ -6,7 +6,7 @@ function ContentForm({ title, children}) {
         <div className="content-title border-bottom mb-5">
             <h1>{title}</h1>
         </div>
-        <div className="content-main">
+        <div className="content-main bg-white">
             {children}
         </div>
         </>

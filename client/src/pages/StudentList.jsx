@@ -1,44 +1,57 @@
-import ContentForm from "../components/ContentComponents/ContentLayout"
-import ListTable from "../components/ContentComponents/ListTable"
-
-const sampleStudents = [
-  {
-    studentId: '2026-00123',
-    firstName: 'Juan',
-    middleName: 'B',
-    lastName: 'Dela Cruz',
-    extensions: 'Jr.',
-    dateOfBirth: '2004-05-15',
-    age: 22,
-    enrollmentDate: '2026-06-10',
-    email: 'juan@example.com',
-    course: 'BSIT',
-    year: '3',
-    section: 'A',
-  },
-  {
-    studentId: '2026-00124',
-    firstName: 'Maria',
-    middleName: '',
-    lastName: 'Santos',
-    extensions: '',
-    dateOfBirth: '2005-08-20',
-    age: 20,
-    enrollmentDate: '2026-06-11',
-    email: 'maria@example.com',
-    course: 'BSBA',
-    year: '2',
-    section: 'B',
-  },
-];
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import ContentForm from "../components/ContentComponents/ContentForm";
+import ListTable from "../components/ContentComponents/ListTable";
 
 export function StudentList() {
-    return (
-        <>
-            <ContentForm title={"Student List"}>
-                <div className="search border p-3 mb-3">Search</div>
-                <ListTable students={sampleStudents}/>
-            </ContentForm>
-        </>
-    )
+  const [students, setStudents] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    fetch("http://localhost/projects/SISystem/server/api/get_students.php")
+      .then((res) => res.json())
+      .then((data) => {
+        setStudents(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("Error fetching students:", err);
+        setLoading(false);
+      });
+  }, []);
+
+  const handleEdit = (student) => {
+    navigate("/", { state: { editingStudent: student } });
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      const res = await fetch(
+        `http://localhost/projects/SISystem/server/api/delete_student.php?id=${id}`,
+        { method: "DELETE" }
+      );
+      if (!res.ok) {
+        const data = await res.json();
+        console.error("Delete failed:", data.error);
+        return;
+      }
+      setStudents((prev) => prev.filter((s) => s.id !== id));
+    } catch (err) {
+      console.error("Network error during delete:", err);
+    }
+  };
+
+  return (
+    <>
+      <ContentForm title={"Student List"}>
+
+        {loading ? (
+          <p>Loading students...</p>
+        ) : (
+          <ListTable students={students} onEdit={handleEdit} onDelete={handleDelete} />
+        )}
+      </ContentForm>
+    </>
+  );
 }

@@ -13,3 +13,15 @@ a {
   text-decoration: none;
   
 }
+
+button, .btn {
+  display: inline-block;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+button:active, .btn:active {
+  transform: translateY(2px) scale(0.97);
+  transition: transform 0.04s ease;
+}
